@@ -23,7 +23,7 @@ Idea of this repo to understand all the components involved in prometheus setup.
 - Run `auto/deploy-grafana` to deploy grafana
 
 
-# Other Manifest repos
+## Other Manifest repos
 
 Alert manager Manifests: https://github.com/bibinwilson/kubernetes-alert-manager
 
