@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Destroying grafana with config for environment: ${ENV}..."
+
+kubectl delete -f grafana/grafana-datasource.yaml
+kubectl delete -f grafana/service.yaml
+kubectl delete -f grafana/statefulset.yaml
+kubectl delete pvc -n monitor grafana-storage-grafana-0

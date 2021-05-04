@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Destroying prometheus with config for environment: ${ENV}..."
+
+kubectl delete -f kube-state-metrics/cluster-role-binding.yaml
+kubectl delete -f kube-state-metrics/cluster-role.yaml
+kubectl delete -f kube-state-metrics/deployment.yaml
+kubectl delete -f kube-state-metrics/service-account.yaml
+kubectl delete -f kube-state-metrics/service.yaml

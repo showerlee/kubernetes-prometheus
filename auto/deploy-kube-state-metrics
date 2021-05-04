@@ -1,0 +1,14 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Deploying kube-state-metrics with config for environment: ${ENV}..."
+
+kubectl apply -f kube-state-metrics/cluster-role-binding.yaml
+kubectl apply -f kube-state-metrics/cluster-role.yaml
+kubectl apply -f kube-state-metrics/service-account.yaml
+kubectl apply -f kube-state-metrics/deployment.yaml
+kubectl apply -f kube-state-metrics/service.yaml
+kubectl patch deployment kube-state-metrics -n kube-system -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl rollout status deployment/kube-state-metrics -n kube-system

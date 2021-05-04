@@ -1,0 +1,13 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Deploying prometheus with config for environment: ${ENV}..."
+
+kubectl apply -f prometheus/clusterRole.yaml
+kubectl apply -f prometheus/config-map.yaml
+kubectl apply -f prometheus/prometheus-statefulset.yaml
+kubectl apply -f prometheus/prometheus-service.yaml
+kubectl patch statefulset prometheus-server -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl rollout status statefulset/prometheus-server -n monitor
