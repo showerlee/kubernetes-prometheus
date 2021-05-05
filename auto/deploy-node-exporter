@@ -1,0 +1,11 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Deploying node-exporter with config for environment: ${ENV}..."
+
+kubectl apply -f node-exporter/daemonset.yaml
+kubectl apply -f node-exporter/service.yaml
+kubectl patch daemonset node-exporter -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl rollout status daemonset/node-exporter -n monitor
