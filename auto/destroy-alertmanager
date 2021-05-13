@@ -1,0 +1,12 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Destroying alertmanager with config for environment: ${ENV}..."
+
+kubectl delete -f alert-manager/alertManagerConfigmap.yaml
+kubectl delete -f alert-manager/alertTemplateConfigMap.yaml
+kubectl delete -f alert-manager/statefulset.yaml
+kubectl delete -f alert-manager/service.yaml
+kubectl delete pvc -n monitor alertmanager-storage-volume-alertmanager-0

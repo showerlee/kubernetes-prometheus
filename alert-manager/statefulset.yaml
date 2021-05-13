@@ -1,0 +1,64 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  name: alertmanager
+  namespace: monitor
+spec:
+  serviceName: alertmanager
+  replicas: 1
+  selector:
+    matchLabels:
+      app: alertmanager
+  template:
+    metadata:
+      name: alertmanager
+      labels:
+        app: alertmanager
+    spec:
+      initContainers:
+        - name: fix-permissions
+          image: busybox
+          command: [chown, -R, "nobody:nobody", /alertmanager/]
+          volumeMounts:
+            - name: alertmanager-storage-volume
+              mountPath: /alertmanager/
+      containers:
+        - name: alertmanager
+          image: prom/alertmanager:v0.21.0
+          args:
+            - "--config.file=/etc/alertmanager/config.yml"
+            - "--storage.path=/alertmanager"
+          ports:
+            - name: alertmanager
+              containerPort: 9093
+          resources:
+            requests:
+              cpu: 500m
+              memory: 500M
+            limits:
+              cpu: 1
+              memory: 1Gi
+          volumeMounts:
+            - name: config-volume
+              mountPath: /etc/alertmanager
+            - name: templates-volume
+              mountPath: /etc/alertmanager-templates
+            - name: alertmanager-storage-volume
+              mountPath: /alertmanager/
+      volumes:
+        - name: config-volume
+          configMap:
+            name: alertmanager-config
+        - name: templates-volume
+          configMap:
+            name: alertmanager-templates
+  volumeClaimTemplates:
+    - metadata:
+        name: alertmanager-storage-volume
+        labels:
+          app: alertmanager
+      spec:
+        accessModes: ["ReadWriteOnce"]
+        resources:
+          requests:
+            storage: 5Gi

@@ -1,6 +1,6 @@
 # kubernetes prometheus
 
-Complete prometheus and grafana monitoring stack setup on existing Kubernetes.
+Complete prometheus, alertmanager and grafana monitoring stack setup on existing Kubernetes.
 
 You can find the full tutorial from here https://devopscube.com/setup-prometheus-monitoring-on-kubernetes/
 
@@ -78,8 +78,6 @@ Idea of this repo to understand all the components involved in prometheus setup.
   - Import via dashboard id from above official link
   - Check the outcome http://localhost:3000/dashboards
 
-  More dashboard: https://grafana.com/grafana/dashboards/13105
+    More dashboard: https://grafana.com/grafana/dashboards/13105
 
-## Other Manifest repos
-
-Alert manager Manifests: https://github.com/bibinwilson/kubernetes-alert-manager
+- Run `auto/deploy-alertmanager` to deploy alertmanager
