@@ -1,10 +1,9 @@
 apiVersion: apps/v1
-kind: StatefulSet
+kind: Deployment
 metadata:
   name: alertmanager
   namespace: monitor
 spec:
-  serviceName: alertmanager
   replicas: 1
   selector:
     matchLabels:
@@ -15,6 +14,15 @@ spec:
       labels:
         app: alertmanager
     spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+              - matchExpressions:
+                  - key: node.monitor.alert
+                    operator: In
+                    values:
+                      - alertmanager
       initContainers:
         - name: fix-permissions
           image: busybox
@@ -52,13 +60,7 @@ spec:
         - name: templates-volume
           configMap:
             name: alertmanager-templates
-  volumeClaimTemplates:
-    - metadata:
-        name: alertmanager-storage-volume
-        labels:
-          app: alertmanager
-      spec:
-        accessModes: ["ReadWriteOnce"]
-        resources:
-          requests:
-            storage: 5Gi
+        - name: alertmanager-storage-volume
+          hostPath:
+            path: /opt/alertmanager/
+            type: DirectoryOrCreate

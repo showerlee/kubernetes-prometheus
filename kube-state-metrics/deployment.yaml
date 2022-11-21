@@ -3,7 +3,7 @@ kind: Deployment
 metadata:
   labels:
     app.kubernetes.io/name: kube-state-metrics
-    app.kubernetes.io/version: v1.9.8
+    app.kubernetes.io/version: v2.2.1
   name: kube-state-metrics
   namespace: kube-system
 spec:
@@ -15,10 +15,10 @@ spec:
     metadata:
       labels:
         app.kubernetes.io/name: kube-state-metrics
-        app.kubernetes.io/version: v1.9.8
+        app.kubernetes.io/version: v2.2.1
     spec:
       containers:
-      - image: quay.io/coreos/kube-state-metrics:v1.9.8
+      - image: registry.cn-shenzhen.aliyuncs.com/starsl/kube-state-metrics:v2.2.1
         livenessProbe:
           httpGet:
             path: /healthz
@@ -37,4 +37,6 @@ spec:
             port: 8081
           initialDelaySeconds: 5
           timeoutSeconds: 5
+      nodeSelector:
+        kubernetes.io/os: linux
       serviceAccountName: kube-state-metrics

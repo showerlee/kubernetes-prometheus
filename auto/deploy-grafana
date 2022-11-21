@@ -6,7 +6,10 @@ ENV=${1:-test}
 echo "Deploying grafana with config for environment: ${ENV}..."
 
 kubectl apply -f grafana/grafana-datasource.yaml
-kubectl apply -f grafana/statefulset.yaml
+# kubectl apply -f grafana/statefulset.yaml
+kubectl apply -f grafana/deployment.yaml
 kubectl apply -f grafana/service.yaml
-kubectl patch statefulset grafana -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
-kubectl rollout status statefulset/grafana -n monitor
+# kubectl patch statefulset grafana -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl patch deployment grafana -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+# kubectl rollout status statefulset/grafana -n monitor
+kubectl rollout status deployment/grafana -n monitor

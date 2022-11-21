@@ -7,7 +7,10 @@ echo "Deploying alertmanager with config for environment: ${ENV}..."
 
 kubectl apply -f alert-manager/alertManagerConfigmap.yaml
 kubectl apply -f alert-manager/alertTemplateConfigMap.yaml
-kubectl apply -f alert-manager/statefulset.yaml
+# kubectl apply -f alert-manager/statefulset.yaml
+kubectl apply -f alert-manager/deployment.yaml
 kubectl apply -f alert-manager/service.yaml
-kubectl patch statefulset alertmanager -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
-kubectl rollout status statefulset/alertmanager -n monitor
+# kubectl patch statefulset alertmanager -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl patch deployment alertmanager -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+# kubectl rollout status statefulset/alertmanager -n monitor
+kubectl rollout status deployment/alertmanager -n monitor

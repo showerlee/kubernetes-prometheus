@@ -7,7 +7,10 @@ echo "Deploying prometheus with config for environment: ${ENV}..."
 
 kubectl apply -f prometheus/clusterRole.yaml
 kubectl apply -f prometheus/config-map.yaml
-kubectl apply -f prometheus/prometheus-statefulset.yaml
+kubectl apply -f prometheus/prometheus-deployment.yaml
+# kubectl apply -f prometheus/prometheus-statefulset.yaml
 kubectl apply -f prometheus/prometheus-service.yaml
-kubectl patch statefulset prometheus-server -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
-kubectl rollout status statefulset/prometheus-server -n monitor
+kubectl patch deployment prometheus-server -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+# kubectl patch statefulset prometheus-server -n monitor -p '{"spec":{"template":{"metadata":{"annotations":{"timestamp": '\"$(date +'%s')\"' }}}}}'
+kubectl rollout status deployment/prometheus-server -n monitor
+# kubectl rollout status statefulset/prometheus-server -n monitor
