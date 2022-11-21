@@ -16,11 +16,29 @@ Idea of this repo to understand all the components involved in prometheus setup.
   kubectl create namespace monitor
   ```
 
-- Run `auto/deploy-prometheus` to deploy prometheus
+- Deploy `prometheus`
+    ```
+    auto/deploy-prometheus
+    ```
 
-- Run `auto/deploy-kube-state-metrics` to deploy kube-state-metrics
+- Deploy `kube-state-metrics`
+    ```
+    auto/deploy-kube-state-metrics
+    ```
 
-- Run `auto/deploy-grafana` to deploy grafana
+- Deploy alertmanager
+    ```
+    auto/deploy-alertmanager
+    ```
+
+- Deploy metrics-server
+    ```
+    ```
+
+- Deploy `grafana`
+    ```
+    auto/deploy-grafana
+    ```
 
 - Forward grafana in local
   
@@ -79,5 +97,3 @@ Idea of this repo to understand all the components involved in prometheus setup.
   - Check the outcome http://localhost:3000/dashboards
 
     More dashboard: https://grafana.com/grafana/dashboards/13105
-
-- Run `auto/deploy-alertmanager` to deploy alertmanager
