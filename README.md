@@ -26,12 +26,12 @@ Idea of this repo to understand all the components involved in prometheus setup.
     auto/deploy-kube-state-metrics
     ```
 
-- Deploy alertmanager
+- Deploy `alertmanager`
     ```
     auto/deploy-alertmanager
     ```
 
-- Deploy metrics-server
+- Deploy `metrics-server`
     ```
     auto/destroy-metrics-server
     ```
