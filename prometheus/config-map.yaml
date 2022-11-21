@@ -130,6 +130,14 @@ data:
           regex: (.+)
           target_label: __metrics_path__
           replacement: /api/v1/nodes/${1}/proxy/metrics/cadvisor
+
+        metric_relabel_configs:
+        - source_labels: [instance]
+          separator: ;
+          regex: (.+)
+          target_label: node
+          replacement: $1
+          action: replace
       
       - job_name: 'kubernetes-service-endpoints'
 
@@ -193,3 +201,9 @@ data:
             regex: '^/system\.slice/(.+)\.service$'
             target_label: systemd_service_name
             replacement: '${1}'
+          - source_labels: [instance]
+            separator: ;
+            regex: (.+)
+            target_label: node
+            replacement: $1
+            action: replace
