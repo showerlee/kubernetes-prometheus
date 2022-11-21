@@ -33,6 +33,7 @@ Idea of this repo to understand all the components involved in prometheus setup.
 
 - Deploy metrics-server
     ```
+    auto/destroy-metrics-server
     ```
 
 - Deploy `grafana`
@@ -40,13 +41,13 @@ Idea of this repo to understand all the components involved in prometheus setup.
     auto/deploy-grafana
     ```
 
-- Forward grafana in local
+- Forward grafana in local(optional)
   
   ```
   kubectl port-forward -n monitor svc/grafana 3000:3000
   ```
 
-- Login grafana
+- Login grafana(optional)
 
   http://localhost:3000
 
