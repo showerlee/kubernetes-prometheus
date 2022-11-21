@@ -1,0 +1,8 @@
+#!/bin/bash -e
+
+cd $(dirname $0)/..
+
+ENV=${1:-test}
+echo "Destroying node-exporter with config for environment: ${ENV}..."
+
+kubectl delete -f metrics-server/components.yaml
