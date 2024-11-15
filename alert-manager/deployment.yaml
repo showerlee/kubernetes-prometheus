@@ -25,7 +25,7 @@ spec:
                       - alertmanager
       initContainers:
         - name: fix-permissions
-          image: busybox
+          image: daocloud.io/daocloud.io
           command: [chown, -R, "nobody:nobody", /alertmanager/]
           volumeMounts:
             - name: alertmanager-storage-volume
