@@ -26,7 +26,7 @@ spec:
                       - prometheus
       initContainers:
         - name: fix-permissions
-          image: daocloud.io/daocloud.io
+          image: docker.m.daocloud.io/busybox
           command: [chown, -R, "nobody:nobody", /prometheus/]
           volumeMounts:
             - name: prometheus-storage-volume
